@@ -1,17 +1,20 @@
 # tiktok-final-project
-Analyzing the Impact of Trending Hashtags on TikTok Video Engagement
-=======
-# Sample Project <Project title>
-#TikTok Final Project
+Analyzing the Relationship Between Hashtag Popularity and Video Engagement on Video Platform.
 
 # Project Description
-This project analyzes the impact of trending hashtags on TikTok videos engagement. 
-It explores whether videos that use trending hashtags receive higher engagement, such as views, likes, comments, and shares.
+This project aims to analyze the relationship between hashtag popularity and video engagement on video platforms .
+The goal is to understand whether more popular or trending hashtags are associated with higher engagement metrics, 
+such as views, likes, comments, and shares.
+Initially, the project focused specifically on Tiktok. However, due to data access limitations, the scope has been slightly
+expanded to include other video platforms. This allow for more stable and accessible data collection while maintaining the
+original research focus.
 
 # Data sources
--TikTok Creative Center (trending hashtags and video data)
--Google Trends (search popularity of related keywords)
--Additional TikTok video data collected through web scraping 
+The project will use three main data sources. 
+First, the YouTube Data API will be used to collect video-level data, including views, likes, and comments. 
+Second, keyword-based search results from YouTube will be used to represent hashtag-related popularity. 
+Third, a publicly available dataset from Kaggle containing YouTube video statistics will be used to supplement and validate the analysis. 
+These sources will be used to analyze the relationship between keyword popularity and video engagement.
 
 # Results 
 _describe your findings_
