@@ -179,7 +179,9 @@ cython_debug/
 .pypirc
 
 # Project data and outputs
-data/
-results/
 .idea/
 .DS_Store
+data/*
+!data/.gitkeep
+__pycache__/
+*.pyc

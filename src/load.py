@@ -3,12 +3,15 @@ import pandas as pd
 import os
 from dotenv import load_dotenv
 
-load_dotenv("src/.env")
+load_dotenv()
 
 API_KEY = os.getenv("YOUTUBE_API_KEY")
 
 
 def get_youtube_data():
+    if API_KEY is None:
+        raise ValueError("YOUTUBE_API_KEY is missing. Please set it in your environment or .env file.")
+
     youtube = build("youtube", "v3", developerKey=API_KEY)
 
     keywords = [
@@ -49,7 +52,6 @@ def get_youtube_data():
             })
 
     df = pd.DataFrame(all_videos)
-    df.to_csv("data/youtube_data.csv", index=False)
     return df
 
 

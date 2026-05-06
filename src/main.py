@@ -1,35 +1,52 @@
-import os
-from config import DATA_DIR, RESULTS_DIR, TITANIC_DATASET_SLUG, WIKI_LARGEST_COMPANIES, IRIS_URL
-from load import get_kaggle_data, get_web_csv_data
-from analyze import plot_statistics
-from process import process_wiki_data
+import argparse
+
+from load import get_youtube_data
+from analyze import summarize_by_keyword, plot_results
+from trends_analysis import get_trends_data, plot_trends_summary
+
+
+def run_youtube_pipeline():
+    print("Running YouTube API pipeline...")
+
+    df = get_youtube_data()
+    summarize_by_keyword(df)
+    plot_results(df)
+
+    print("YouTube API pipeline completed.\n")
+
+
+def run_trends_pipeline():
+    print("Running Google Trends pipeline...")
+
+    df = get_trends_data()
+    if df is not None:
+        plot_trends_summary(df)
+
+    print("Google Trends pipeline completed.\n")
+
+
+def main():
+    parser = argparse.ArgumentParser(description="Run project pipelines")
+    parser.add_argument("--youtube", action="store_true", help="Run YouTube API pipeline")
+    parser.add_argument("--trends", action="store_true", help="Run Google Trends pipeline")
+    parser.add_argument("--all", action="store_true", help="Run all available pipelines")
+
+    args = parser.parse_args()
+
+    if args.all:
+        run_youtube_pipeline()
+        run_trends_pipeline()
+    elif args.youtube:
+        run_youtube_pipeline()
+    elif args.trends:
+        run_trends_pipeline()
+    else:
+        print("No pipeline selected.")
+        print("Use one of the following:")
+        print("  python src/main.py --youtube")
+        print("  python src/main.py --trends")
+        print("  python src/main.py --all")
+
 
 if __name__ == "__main__":
-    # Create a data directory
-    os.makedirs(DATA_DIR, exist_ok=True)
-
-    # --- Kaggle Data ---
-    # We'll use the classic Titanic dataset
-    kaggle_df = get_kaggle_data(dataset_slug=TITANIC_DATASET_SLUG, extract_dir=DATA_DIR)
-    if kaggle_df is not None:
-        print(f"\nKaggle (Titanic) Data Head:\n{kaggle_df.head()}")
-        plot_statistics(kaggle_df, 'Titanic', result_dir=RESULTS_DIR)
-    print("\n" + "=" * 50 + "\n")
-
-    # --- Web CSV Data ---
-    # We'll use the Iris dataset from a public repo
-    web_df = get_web_csv_data(IRIS_URL)
-    if web_df is not None:
-        print(f"\nWeb (Iris) Data Head:\n{web_df.head()}")
-        plot_statistics(web_df, 'Iris', result_dir=RESULTS_DIR)
-    print("\n" + "=" * 50 + "\n")
-
-    # --- Wikipedia Scraped Data ---
-    # We'll scrape a table of the largest companies
-    # process data firsts
-    plot_df = process_wiki_data(WIKI_LARGEST_COMPANIES)
-    # plot results
-    plot_statistics(plot_df.dropna(), 'Wikipedia_Companies', result_dir=RESULTS_DIR)
-    print("\n" + "=" * 50 + "\n")
-
-    print("\n--- Data collection and plotting complete. Check the 'results' directory. ---")
+    main()

@@ -2,3 +2,4 @@ pandas
 google-api-python-client
 python-dotenv
 pytest
+matplotlib
